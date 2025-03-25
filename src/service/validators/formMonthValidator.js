@@ -1,8 +1,14 @@
+import isValidNumber from "./isNumberValidator";
+
 export default function formMonthValidator(month) {
+
+   if (!isValidNumber(month)) return 'Enter valid number';
   
-  if (!month) {
+   const numericMonth = Number(month);
+
+  if (!numericMonth) {
     return "This field is required";
-  } else if (month < 1 || month > 12) {
+  } else if (numericMonth < 1 || numericMonth > 12) {
       return "Enter a valid month";
     } 
   

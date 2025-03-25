@@ -1,9 +1,14 @@
-export default function formYearValidator(year) {
-  const minYear = 1900;
+import isValidNumber from "./isNumberValidator";
 
-  if (!year) {
+export default function formYearValidator(year) {
+
+  if (!isValidNumber(year)) return 'Enter valid number';
+
+  const numericYear = Number(year)
+
+  if (!numericYear) {
     return "This field is required";
-  } else if (year < minYear || year > new Date().getFullYear()) {
+  } else if (numericYear < 1 || numericYear > new Date().getFullYear()) {
     return "Enter a valid year";
   }
 

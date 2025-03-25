@@ -17,8 +17,8 @@ function Form() {
  
   const handleDayChange = (e) => {
     const chosenDay = e.target.value;
-    const chosenMonth = month;
-    const chosenYear = year;
+    const chosenMonth = Number(month);
+    const chosenYear = Number(year);
 
     const error = formDayValidator(chosenDay, chosenMonth, chosenYear);
     setDayError(error);
@@ -74,7 +74,7 @@ function Form() {
           <label>
             Day:
             <input
-              type="number"
+              type="text"
               value={day}
               onChange={(e) => handleDayChange(e)}
               placeholder="DD"
@@ -87,7 +87,7 @@ function Form() {
           <label>
             Month:
             <input
-              type="number"
+              type="text"
               value={month}
               onChange={(e) => handleMonthChange(e)}
               placeholder="MM"
@@ -100,7 +100,7 @@ function Form() {
           <label>
             Year:
             <input
-              type="number"
+              type="text"
               value={year}
               onChange={(e) => handleYearChange(e)}
               placeholder="YYYY"
