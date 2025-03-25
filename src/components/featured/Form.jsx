@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AgeContext } from "../../context/AgeContext";
 
 import ageCalculator from "../../service/utils/ageCalculator";
 import formDayValidator from "../../service/validators/formDayValidator";
@@ -6,6 +7,8 @@ import formMonthValidator from "../../service/validators/formMonthValidator";
 import formYearValidator from "../../service/validators/formYearValidator";
 
 function Form() {
+  const { setAgeResult } = useContext(AgeContext);
+
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
@@ -14,7 +17,6 @@ function Form() {
   const [monthError, setMonthError] = useState('');
   const [yearError, setYearError] = useState('');
 
- 
   const handleDayChange = (e) => {
     const chosenDay = e.target.value;
     const chosenMonth = Number(month);
@@ -62,9 +64,11 @@ function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    if (!validateInputs()) return
+    if (!validateInputs()) return;
 
-    ageCalculator(day, month, year);
+    const age = ageCalculator(day, month, year);
+
+    setAgeResult(age);
   };
 
   return (
@@ -109,7 +113,7 @@ function Form() {
           </label>
           {yearError && <span className="error-message">{yearError}</span>}
         </div>
-        <button type="submit" disabled={!validateInputs()} >Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );
