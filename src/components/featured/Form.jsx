@@ -62,7 +62,7 @@ function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    if (!validateInputs()) return;
+    if (!validateInputs()) return
 
     ageCalculator(day, month, year);
   };
@@ -109,7 +109,7 @@ function Form() {
           </label>
           {yearError && <span className="error-message">{yearError}</span>}
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!validateInputs()} >Submit</button>
       </form>
     </>
   );
