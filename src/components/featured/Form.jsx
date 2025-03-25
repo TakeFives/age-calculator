@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-import ageCalculator from "../../service/ageCalculator";
+import ageCalculator from "../../service/utils/ageCalculator";
+import formDayValidator from "../../service/validators/formDayValidator";
+import formMonthValidator from "../../service/validators/formMonthValidator";
+import formYearValidator from "../../service/validators/formYearValidator";
 
 function Form() {
   const [day, setDay] = useState("");
@@ -12,10 +15,49 @@ function Form() {
   const [yearError, setYearError] = useState('');
 
  
-  const validateInputs = () =>{
-    let isFormValid;
-    //validation goes here
-  }
+  const handleDayChange = (e) => {
+    const chosenDay = e.target.value;
+    const chosenMonth = month;
+    const chosenYear = year;
+
+    const error = formDayValidator(chosenDay, chosenMonth, chosenYear);
+    setDayError(error);
+
+    if (error) {
+      setDay(''); 
+    } else {
+      setDay(chosenDay);
+    }
+  };
+  const handleMonthChange = (e) => {
+    const chosenMonth = e.target.value;
+
+    const error = formMonthValidator(chosenMonth);
+    setMonthError(error);
+
+    if (error) {
+      setMonth(''); 
+    } else {
+      setMonth(chosenMonth);
+    }
+  };
+  const handleYearChange = (e) => {
+    const chosenYear = e.target.value;
+
+    const error = formYearValidator(chosenYear);
+    setYearError(error);
+
+    if (!error) {
+        setYear(chosenYear);
+      }
+  };
+
+  const validateInputs = () => {
+    if (dayError || monthError || yearError || !day || !month || !year) {
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,8 +76,9 @@ function Form() {
             <input
               type="number"
               value={day}
-              onChange={(e) => setDay(e.target.value)}
+              onChange={(e) => handleDayChange(e)}
               placeholder="DD"
+              className={dayError && `error`}
             />
           </label>
           {dayError && <span className="error-message">{dayError}</span>}
@@ -46,8 +89,9 @@ function Form() {
             <input
               type="number"
               value={month}
-              onChange={(e) => setMonth(e.target.value)}
+              onChange={(e) => handleMonthChange(e)}
               placeholder="MM"
+              className={monthError && `error`}
             />
           </label>
           {monthError && <span className="error-message">{monthError}</span>}
@@ -58,8 +102,9 @@ function Form() {
             <input
               type="number"
               value={year}
-              onChange={(e) => setYear(e.target.value)}
-              placeholder="YY"
+              onChange={(e) => handleYearChange(e)}
+              placeholder="YYYY"
+              className={yearError && `error`}
             />
           </label>
           {yearError && <span className="error-message">{yearError}</span>}
